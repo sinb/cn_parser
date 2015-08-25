@@ -12,18 +12,12 @@ int main()
     DictionaryParser dicparser;
     vector<wstring> output;
 
-//    wstring input;
-//    getline(wcin, input);
-//
-//    dicparser.parse(input, output);
-    //
     while(!wcin.eof())
     {
       wstring input;
       getline(wcin, input);
       dicparser.parse(input, output);
     }
-    //
     for (int i = 0; i < output.size(); i++)
         wcout << output[i] << " ";
     wcout << endl;
