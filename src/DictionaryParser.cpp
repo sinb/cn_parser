@@ -26,7 +26,7 @@ void DictionaryParser :: parse(wstring input, vector<wstring> &output)
 {
 
     int parse_loc_begin = 0;
-    int parse_loc_end = input.size();
+    int parse_loc_end = (parse_loc_begin+max_word_length) < input.size() ? (parse_loc_begin+max_word_length) : input.size();
     while (input.substr(parse_loc_begin, parse_loc_end - parse_loc_begin).size() != 0 && (parse_loc_end <= input.size()))
     {
         bool found = false;
@@ -34,7 +34,7 @@ void DictionaryParser :: parse(wstring input, vector<wstring> &output)
         {
             output.push_back(input.substr(parse_loc_begin, parse_loc_end - parse_loc_begin));
             parse_loc_begin = parse_loc_end;
-            parse_loc_end = input.size();
+            parse_loc_end = (parse_loc_begin+max_word_length) < input.size() ? (parse_loc_begin+max_word_length) : input.size();
             continue;
         }
 
@@ -46,7 +46,7 @@ void DictionaryParser :: parse(wstring input, vector<wstring> &output)
             {
                 output.push_back(input.substr(parse_loc_begin, parse_loc_end - parse_loc_begin));
                 parse_loc_begin = parse_loc_end;
-                parse_loc_end = input.size();
+                parse_loc_end = (parse_loc_begin+max_word_length) < input.size() ? (parse_loc_begin+max_word_length) : input.size();
                 found = true;
                 break;
             }
