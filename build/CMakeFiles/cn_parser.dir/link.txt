@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++11   CMakeFiles/cn_parser.dir/src/main.o CMakeFiles/cn_parser.dir/src/DictionaryParser.o  -o cn_parser -rdynamic 

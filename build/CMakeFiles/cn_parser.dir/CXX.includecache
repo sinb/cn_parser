@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/DictionaryParser.hpp
+iostream
+-
+vector
+-
+fstream
+-
+string
+-
+
+/home/hehe/projects/cn_parser/src/DictionaryParser.cpp
+DictionaryParser.hpp
+/home/hehe/projects/cn_parser/src/DictionaryParser.hpp
+
+/home/hehe/projects/cn_parser/src/main.cpp
+iostream
+-
+vector
+-
+fstream
+-
+string
+-
+DictionaryParser.hpp
+/home/hehe/projects/cn_parser/src/DictionaryParser.hpp
+
