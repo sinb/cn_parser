@@ -16,7 +16,7 @@ public:
     void printDic();
     int get_max_word_length();
     void parse(wstring input, vector<wstring> &output);
-
+  
 };
 
 
