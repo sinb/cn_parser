@@ -4,7 +4,6 @@
 #include <string>
 #include "DictionaryParser.hpp"
 #include "HMMParser.hpp"
-#include "hmm.hpp"
 #include <float.h>
 #include <sstream>
 using namespace std;
