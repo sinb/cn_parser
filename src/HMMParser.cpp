@@ -20,6 +20,8 @@
 #include <algorithm>
 #include <string>
 #include <sstream>
+#include <cfloat>
+#include <deque>
 HMMParser::HMMParser()
 {
   m_length_states = 4;
@@ -107,6 +109,94 @@ void HMMParser::getEmitProb()
       m_emission_probability["S"].insert(make_pair(buf, logp));
     }    
 }
+void HMMParser::setInput(wstring input)
+{
+    weight.clear();
+    path.clear();
+    m_observations.assign(input);
+    m_length_obs = m_observations.size();
+    for (size_t t = 0; t < m_length_states; t++)
+    {
+      weight.insert(make_pair(m_states[t], new double[m_length_obs]));
+      path.insert(make_pair(m_states[t], new string[m_length_obs]));
+    }  
+}
+string HMMParser::Viterbi()
+{
+    // init
+    // need to convert wchar to wstring
+    wstringstream ss;
+    wstring obs_char;
+    ss << m_observations[0]; ss >> obs_char;
+    for (size_t t = 0; t < m_length_states; t++)
+    {
+      weight[m_states[t]][0] = m_start_probability[m_states[t]] + 
+	    m_emission_probability[m_states[t]][obs_char];
+    }
+    for (size_t t = 1; t < m_length_obs; t++)
+    {
+      ss.clear();
+      ss << m_observations[t];
+      ss >> obs_char;
+      for (size_t i = 0; i < m_length_states; i++)
+      { 
+	string key = m_states[i];
+	weight[key][t] = -3.14e+100;
+	for (size_t j = 0; j < m_length_states; j++) 
+	{
+	  string prev_key = m_states[j];
+
+	  double tmp = weight[prev_key][t-1] + m_transition_probability[prev_key][key] +
+	    m_emission_probability[key][obs_char];
+	  if (tmp > weight[key][t])
+	  {
+	    weight[key][t] = tmp;
+	    path[key][t] = prev_key;
+	  }
+	  else
+	  {
+	  }
+	  
+	}
+      } 
+    }
+    size_t end_state = 2;
+    double max = -3.14e+100;
+    size_t t;
+    // 结束字只能从E 或者 S里出来,所以之比较这两个
+    for ( t = 2; t < m_length_states; t++)
+    {
+      if (weight[m_states[t]][m_length_obs-1] > max)
+      {
+	max = weight[m_states[t]][m_length_obs-1];
+	end_state = t;
+      }
+    }    
+    deque<string> viterbi_path;
+    string state = m_states[end_state];
+    viterbi_path.push_front(state);
+    for (size_t time = m_length_obs - 1; time > 0; time--)
+    {
+      state = path[state][time];
+      viterbi_path.push_front(state);
+    }    
+    for (size_t i = 0; i < m_length_obs; i++)
+    {
+      if (viterbi_path[i] == "E" || viterbi_path[i] == "S" )
+      {
+	wcout << m_observations[i] << " ";
+      }
+      else
+      {
+	wcout << m_observations[i];
+      }
+    }
+//     for (auto it = viterbi_path.begin(); it != viterbi_path.end(); it++)
+//       cout << *it;
+
+    
+}
+
 HMMParser::~HMMParser()
 {
 
