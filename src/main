@@ -1,0 +1,26 @@
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include <string>
+#include "DictionaryParser.hpp"
+#include "HMMParser.hpp"
+#include "hmm.hpp"
+#include <float.h>
+#include <sstream>
+using namespace std;
+
+int main(int argc, char* argv[])
+{
+    locale::global(locale(""));
+    wcout.imbue(locale(""));  
+    HMMParser a;
+    a.getEmitProb();
+    while(!wcin.eof())
+    {
+        wstring input;
+        getline(wcin, input);
+        a.setInput(input);
+    }    
+    a.Viterbi();
+    return 0;
+}
